@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>INP above 200ms test case</title>
+</head>
+<body>
+<p id="tap">Tapping causes an INP above 200ms</p>
+<script type="module">
+  import { onINP } from 'https://unpkg.com/web-vitals@3.0.0-beta.2/dist/web-vitals.js?module';
+
+  onINP(
+    (inp) => {
+      inp.entries.forEach(entry => {
+        console.log('INP:', entry.name, entry.duration, entry.target)
+      })
+    },
+    {
+      reportAllChanges: true,
+      durationThreshold: 0,
+    }
+  );
+</script>
+<script>
+  document.addEventListener('touchmove', (e)=>{ e.preventDefault() }, { passive: false });
+
+  document.querySelector('#tap').addEventListener('touchstart', () => {
+    console.log('touchstart')
+  })
+
+  document.querySelector('#tap').addEventListener('touchstart', () => {
+    console.log('touchend')
+  })
+</script>
+</body>
+</html>
